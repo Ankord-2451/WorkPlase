@@ -1,15 +1,21 @@
 ﻿using SQLite;
 using System.ComponentModel.DataAnnotations;
-using WorkPlase1.Interfaises;
 
 namespace WorkPlase1.Models
 {
-    public class Worker : IUser
+    public enum Role
+    {
+        Worker,
+        Employer
+    }
+    public class AccountModel
     {
         [Key]
         [AutoIncrement]
         public int Id { get; set; }
         public string Name { get; set; }
+        [Required]
+        public Role role { get; set; }
         [Required]
         public string login { get; set; }
         [Required]
@@ -19,7 +25,7 @@ namespace WorkPlase1.Models
 
         [Required]
         public string profession { get; set; }
-        
+
         public int? IDofProject { get; set; }
 
         public int? IDofEmployer { get; set; }
