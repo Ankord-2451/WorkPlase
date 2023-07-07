@@ -45,7 +45,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-app.UseSession();
+//app.UseSession();
 app.UseMiddleware<TokenToContextMiddleware>();
 
 app.MapControllerRoute(

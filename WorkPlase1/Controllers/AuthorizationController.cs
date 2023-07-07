@@ -7,7 +7,7 @@ namespace WorkPlase1.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AuthorizationController : Controller
+    public class AuthorizationController : ControllerBase
     {
 
         private ApplicationDbContext dbContext;
@@ -19,19 +19,19 @@ namespace WorkPlase1.Controllers
             configuration = _configuration;
         }
 
-        [HttpGet("Authorization/Form")]
+        [HttpGet("Authorization")]
         public ActionResult Index()
         {
             var session = new SessionWorker(HttpContext);
            
             if (session.IsAuthorized())
             {
-                return RedirectToAction("Index","Users",new { id = session.GetUserId() });
+                return RedirectToAction("counter");
             }
              return null;
         }
 
-        [HttpPost("Authorization/Form")]
+        [HttpPost("Authorization")]
         public ActionResult Index(string login,string password)
         {
             AccountModel account;
@@ -68,12 +68,12 @@ namespace WorkPlase1.Controllers
             } 
             
            
-            return View("Index");
+            return Index();
         }
 
 
 
-        [HttpGet("Authorization/LogOut")]
+        [HttpGet("LogOut")]
         public ActionResult LogOut()
         {
             var session = new SessionWorker(HttpContext);
