@@ -1,7 +1,7 @@
 import { Counter } from "./components/Counter";
 import { FetchData } from "./components/FetchData";
 import { Home } from "./components/Home";
-import { Authorization } from "./components/Authorization";
+import { Auth } from "./components/Authorization";
 
 const AppRoutes = [
   {
@@ -17,8 +17,8 @@ const AppRoutes = [
     element: <FetchData />
   },
   {
-    path: '/Authorization',
-      element: <Authorization />
+    path: '/Auth',
+      element: <Auth />
   }
 
 ];

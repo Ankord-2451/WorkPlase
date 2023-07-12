@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
-namespace Dental_Clinic.Middleware
+namespace WorkPlase1.Middleware
 {
     public class TokenToContextMiddleware
     {
@@ -18,9 +18,9 @@ namespace Dental_Clinic.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-
+           
             token = context.Session.GetString("token");
-
+           
             if (token != null)
             {
                 context.Request.Headers["Authorization"] = token;

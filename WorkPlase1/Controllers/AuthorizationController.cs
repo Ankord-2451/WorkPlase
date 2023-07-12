@@ -19,30 +19,31 @@ namespace WorkPlase1.Controllers
             configuration = _configuration;
         }
 
-        [HttpGet("Authorization")]
-        public ActionResult Index()
+        [HttpGet]
+        public void Get()
         {
             var session = new SessionWorker(HttpContext);
            
             if (session.IsAuthorized())
             {
-                return RedirectToAction("counter");
+               
             }
-             return null;
+           
         }
 
-        [HttpPost("Authorization")]
-        public ActionResult Index(string login,string password)
+        [HttpPost]
+        public ActionResult Post([FromBody] Log log)
         {
             AccountModel account;
+
             
             var session = new SessionWorker(HttpContext);
 
-          
-           password = Encoder.Encode(configuration, password);
+
+            log.password = Encoder.Encode(configuration, log.password);
 
             try { 
-            account = dbContext.Accounts.First(e => (e.login == login) && (e.password == password));
+            account = dbContext.Accounts.First(e => (e.login == log.login) && (e.password == log.password));
             }
             catch
             {
@@ -64,11 +65,11 @@ namespace WorkPlase1.Controllers
                     role = account.role 
                 });
 
-                return RedirectToAction(nameof(Index));
-            } 
-            
-           
-            return Index();
+                return Ok(new { message = "Loged successfully." }); ;
+            }
+
+
+            return Ok(new { message = "Form data received successfully." });
         }
 
 
@@ -80,5 +81,10 @@ namespace WorkPlase1.Controllers
             session.Clear();
             return RedirectToAction("Index","Home");
         }
+    }
+    public class Log
+    {
+        public string login { get; set; }
+        public string password { get; set; }
     }
 }
