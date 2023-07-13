@@ -19,18 +19,6 @@ namespace WorkPlase1.Controllers
             configuration = _configuration;
         }
 
-        [HttpGet]
-        public void Get()
-        {
-            var session = new SessionWorker(HttpContext);
-           
-            if (session.IsAuthorized())
-            {
-               
-            }
-           
-        }
-
         [HttpPost]
         public ActionResult Post([FromBody] Log log)
         {
@@ -74,13 +62,7 @@ namespace WorkPlase1.Controllers
 
 
 
-        [HttpGet("LogOut")]
-        public ActionResult LogOut()
-        {
-            var session = new SessionWorker(HttpContext);
-            session.Clear();
-            return RedirectToAction("Index","Home");
-        }
+      
     }
     public class Log
     {

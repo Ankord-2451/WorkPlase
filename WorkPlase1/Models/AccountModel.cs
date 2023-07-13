@@ -13,12 +13,15 @@ namespace WorkPlase1.Models
         [Key]
         [AutoIncrement]
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
         [Required]
         public Role role { get; set; }
         [Required]
+        [MinLength(8)]
         public string login { get; set; }
         [Required]
+        [MinLength(8)]
         public string password { get; set; }
 
         public string? email { get; set; }

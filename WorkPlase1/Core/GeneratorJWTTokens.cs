@@ -22,7 +22,7 @@ namespace WorkPlase1.Core
             {
                Claims= new Dictionary<string, object>
                {
-                   {"Role",employee.role},
+                   {"Role",employee.role.ToString()},
                    {"ID",employee.Id.ToString()}
                },
                 Audience = employee.Id.ToString(),
