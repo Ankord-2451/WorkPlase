@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-
+import { Link, Navigate } from 'react-router-dom';
 export class Auth extends Component {
  static displayName = Auth.name;
     constructor(props) {
         super(props);
         this.state = { login: "", password: "" };
 
+        this.Redirect = false;
+
         this.onSubmit = this.onSubmit.bind(this);
-        this.onloginChange = this.onloginChange.bind(this);
-        this.onpasswordChange = this.onpasswordChange.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
-    onloginChange(e) {
-        this.setState({ login: e.target.value });
-    }
-    onpasswordChange(e) {
-        this.setState({ password: e.target.value });
+    onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     onSubmit = (e) => {
@@ -30,40 +28,45 @@ export class Auth extends Component {
             body: JSON.stringify(this.state)
         })
             .then(response => response.json())
-            .then(data => {
+            .then(response => {
                 // Обработка ответа от сервера
-                console.log(data);
+                if (response === "yes") { 
+                    this.Redirect = true;
+                    this.forceUpdate();
+                }
             })
             .catch(error => {
                 // Обработка ошибок
                 console.error(error);
             });
+        
     };
 
     render() {
+        if (this.Redirect) {
+            return <Navigate to="/" replace={true} />;
+        }
         return (
             <div class="login">
              <div class="text-center">
                     <form onSubmit={this.onSubmit}>
-                        <label name="Login">Login :</label>
-                <p>
-                    <input type="text"
-                        value={this.state.login}
-                                onChange={this.onloginChange} />
-                         <br />
-                        </p>
+                    <label name="Login">Login :</label>               
+                    <input type="text" name="login"
+                           value={this.state.login}
+                            onChange={this.onChange} />
+                    <br />
+                        
 
-                        <label name="Password">Password :</label>
-                <p>
-                    <input type="password"
-                        value={this.state.password}
-                                onChange={this.onpasswordChange} />
-                            <br />
-                </p>
+                    <label name="Password">Password :</label>                
+                    <input type="password" name="password"
+                           value={this.state.password}
+                            onChange={this.onChange} />
+                    <br />
+                
                 <input type="submit" value="Log in" />
                 </form>
                 <br />
-                <button>Create Account</button>
+                    <Link tag={Link} to="/Regist">Create Account</Link>
              </div>
             </div>
         );

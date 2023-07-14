@@ -12,3 +12,57 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+.text-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.Role{
+   all:unset;
+}
+.Regist form {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightskyblue;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.5s ease-in-out;
+}
+.Regist label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.Regist input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="email"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 20px;
+    width: 100%;
+}
+.Regist button[type="submit"] {
+    background-color: #1abc9c;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+    .Regist button[type="submit"]:hover {
+        background-color: #16a085;
+    }
+
+.worker {
+    overflow: hidden;
+    transition: height 0.5s ease-in-out;
+}

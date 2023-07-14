@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using WorkPlase1.Core;
 using WorkPlase1.Data;
 using WorkPlase1.Models;
@@ -53,11 +54,11 @@ namespace WorkPlase1.Controllers
                     role = account.role 
                 });
 
-                return Ok(new { message = "Loged successfully." }); ;
+                return Ok(JsonSerializer.Serialize<string>("yes"));
             }
 
 
-            return Ok(new { message = "Form data received successfully." });
+            return Ok(JsonSerializer.Serialize<string>("no"));
         }
 
 
