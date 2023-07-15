@@ -29,8 +29,6 @@ namespace WorkPlase1.Models
         [Required]
         public string profession { get; set; }
 
-        public int? IDofProject { get; set; }
-
         public int? IDofEmployer { get; set; }
 
         public int? HoursOfWork { get; set; }
