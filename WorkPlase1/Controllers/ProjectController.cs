@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using WorkPlase1.Core;
 using WorkPlase1.Data;
 using WorkPlase1.Models;
 
@@ -27,9 +28,16 @@ namespace WorkPlase1.Controllers
         {
             if (ModelState.IsValid)
             {
-                dbContext.Projects.Add(project);
-                dbContext.SaveChanges();
-                return Ok(JsonSerializer.Serialize<string>("Was created new project"));
+                var session = new SessionWorker(HttpContext);
+                if (session.IsEmployer())
+                {
+                    project.IDofEmployer=session.GetUserId();
+                    project.DateOfCreation=DateTime.Now;
+                    dbContext.Projects.Add(project);
+                    dbContext.SaveChanges();
+                    return Ok(JsonSerializer.Serialize<string>("Was created new project"));
+                }
+                return Ok(JsonSerializer.Serialize<string>("you don't have enough permission to do so"));
             }
             return Ok(JsonSerializer.Serialize<string>("project isn't valid"));
         }

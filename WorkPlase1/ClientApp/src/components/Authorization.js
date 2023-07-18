@@ -63,7 +63,7 @@ export class Auth extends Component {
                             onChange={this.onChange} />
                     <br />
                 
-                <input type="submit" value="Log in" />
+                <button type="submit">Log in</button>
                 </form>
                 <br />
                     <Link tag={Link} to="/Regist">Create Account</Link>

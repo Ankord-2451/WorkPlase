@@ -5,9 +5,12 @@ const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_H
   env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'http://localhost:21256';
 
 const context = [
-  "/Authorization",
+    "/Authorization",
     "/weatherforecast",
     "/Registration",
+    "/Project",
+    "/Task",
+    "/Worker",
 ];
 
 module.exports = function(app) {

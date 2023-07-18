@@ -17,8 +17,6 @@ namespace WorkPlase1.Models
 
         public DateTime DateOfCreation { get; set; }
 
-        public int ProgressInPercentage { get; set; }
-
         public int IDofEmployer { get; set; }
 
         public bool ExistAllTasks { get; set; }
