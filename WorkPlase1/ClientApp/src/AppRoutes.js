@@ -4,7 +4,8 @@ import { Home } from "./components/Home";
 import { Auth } from "./components/Authorization";
 import { Regist } from "./components/Registration"; 
 //import { Task } from "./components/TaskForm";
-//import { Pr } from "./components/PrForm"; 
+//import { Pr } from "./components/PrForm";
+import { TaskEdit } from "./components/TaskEdit";
 
 const AppRoutes = [
   {
@@ -27,7 +28,10 @@ const AppRoutes = [
       path: '/Regist',
       element: <Regist />
     },
-
+    {
+        path: '/TEdit',
+        element: <TaskEdit />
+    },
 ];
 
 export default AppRoutes;

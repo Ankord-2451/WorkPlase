@@ -10,6 +10,7 @@ const context = [
     "/Registration",
     "/Project",
     "/Task",
+    "/Task/One",
     "/Worker",
 ];
 

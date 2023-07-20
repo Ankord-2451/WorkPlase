@@ -21,6 +21,12 @@ namespace WorkPlase1.Controllers
             return dbContext.Tasks.Where(x=>x.IDofProject== IdOfPoject).ToArray();
         }
 
+        [HttpGet("One/{id?}")]
+        public IEnumerable<TaskModel> GetOne(int id)
+        {
+            return dbContext.Tasks.Where(x => x.Id == id).ToArray();
+        }
+
         [HttpPost]
         public IActionResult Post([FromBody]TaskModel task)
         {
