@@ -77,9 +77,9 @@ export class Regist extends Component {
             return <Navigate to="/" replace={true} />;
         }
       return  (
-            <div class="Regist" align="center">
-              <div class="text-center">
-                  <button class="Role" onClick={this.RoleBtn}><img src={this.image} alt="GOD" width="200px" height="200px"/></button>
+            <div className="Regist" align="center">
+              <div className="text-center">
+                  <button className="Role" onClick={this.RoleBtn}><img src={this.image} alt="GOD" width="200px" height="200px"/></button>
                   <form onSubmit={this.onSubmit} style={this.WForm}>
 
                          <label name="Name">Name :</label>
@@ -99,7 +99,7 @@ export class Regist extends Component {
                           value={this.state.email}
                           onChange={this.onChange} />
                       <br />
-                      <div class="worker" style={this.Worker}>
+                      <div className="worker" style={this.Worker}>
                           <label name="IDofEmployer">IDofEmployer :  </label>
                           <input type="number" name="IDofEmployer"
                               value={this.state.IDofEmployer}

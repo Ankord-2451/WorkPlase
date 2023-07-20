@@ -16,7 +16,7 @@ namespace WorkPlase1.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<TaskModel> Get([FromBody]int IdOfPoject)
+        public IEnumerable<TaskModel> Get([FromForm]int IdOfPoject)
         {
             return dbContext.Tasks.Where(x=>x.IDofProject== IdOfPoject).ToArray();
         }
@@ -26,6 +26,10 @@ namespace WorkPlase1.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (task.IDofWorker != null)
+                {
+                    task.DateOfStart=DateTime.Now;
+                }
                 dbContext.Tasks.Add(task);
                 dbContext.SaveChanges();
                 return Ok(JsonSerializer.Serialize<string>("Was created new Task"));

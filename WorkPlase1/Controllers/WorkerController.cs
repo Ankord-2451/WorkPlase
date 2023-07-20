@@ -20,8 +20,15 @@ namespace WorkPlase1.Controllers
         public IEnumerable<AccountModel> Get()
         {
             var session = new SessionWorker(HttpContext);
-            if(session.IsEmployer()) { 
-            return dbContext.Accounts.Where(x => x.IDofEmployer == session.GetUserId()).ToArray();
+            if(session.IsEmployer())
+            {
+                try {          
+                    return dbContext.Accounts.Where(x => x.IDofEmployer == session.GetUserId()).ToArray();
+                }
+                catch
+                {
+                    return null;
+                }
             }
             else
             {

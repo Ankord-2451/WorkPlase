@@ -3,8 +3,8 @@ import { FetchData } from "./components/FetchData";
 import { Home } from "./components/Home";
 import { Auth } from "./components/Authorization";
 import { Regist } from "./components/Registration"; 
-import { Task } from "./components/TaskForm";
-import { Pr } from "./components/PrForm"; 
+//import { Task } from "./components/TaskForm";
+//import { Pr } from "./components/PrForm"; 
 
 const AppRoutes = [
   {
@@ -26,14 +26,6 @@ const AppRoutes = [
   {
       path: '/Regist',
       element: <Regist />
-    },
-    {
-        path: '/TForm',
-       element: <Task />
-    },
-    {
-       path: '/PrForm',
-        element: <Pr />
     },
 
 ];

@@ -50,8 +50,8 @@ export class Pr extends Component {
             return <Navigate to="/" replace={true} />;
         }
       return  (
-            <div align="center">
-              <div class="text-center">
+            <div className="Project" align="center">
+              <div className="text-center">
                   <form onSubmit={this.onSubmit}>
 
                          <label name="Name">Name :</label>
@@ -61,7 +61,7 @@ export class Pr extends Component {
                          <br />
 
                       <label name="Description">Description :</label>
-                      <input type="text" name="Description"
+                      <input type="textarea" name="Description"
                           value={this.state.Description}
                              onChange={this.onChange} />
                       <br />

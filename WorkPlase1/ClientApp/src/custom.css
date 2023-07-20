@@ -12,43 +12,52 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
-
-.text-center {
+/*login style*/
+.login {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-.Role{
-   all:unset;
-}
-.Regist form {
-    width: 600px;
+
+.Home text-center {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: lightskyblue;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.5s ease-in-out;
+    justify-content: center;
 }
-.Regist label {
+
+    .Home form {
+        width: unset;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f5f5f5;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    }
+
+.Home label {
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 10px;
 }
-.Regist input[type="text"],
+
+ .Home input[type="text"],
 input[type="password"],
 input[type="number"],
-input[type="email"] {
+input[type="email"],
+input[type="textarea"],
+input[type="datetime-local"],
+select {
     padding: 10px;
     border-radius: 5px;
     border: none;
     margin-bottom: 20px;
     width: 100%;
 }
-.Regist button[type="submit"] {
+.Home button[type="submit"] {
     background-color: #1abc9c;
     color: #fff;
     padding: 10px 20px;
@@ -58,11 +67,99 @@ input[type="email"] {
     transition: background-color 0.3s ease-in-out;
 }
 
-    .Regist button[type="submit"]:hover {
+    .Home button[type="submit"]:hover {
         background-color: #16a085;
     }
+
+    .Home a {
+        color: #1abc9c;
+        font-weight: bold;
+        text-decoration: none;
+        transition: color 0.3s ease-in-out;
+    }
+
+        .Home a:hover {
+            color: #16a085;
+        }
+
+
+
+
+.Role{
+   all:unset;
+}
+.Regist form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightskyblue;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.5s ease-in-out;
+}
+
+
 
 .worker {
     overflow: hidden;
     transition: height 0.5s ease-in-out;
 }
+/*Style for progect form */
+.Project{
+    background-color:lightblue;
+}
+    .Project form {
+        width:100%;
+        background-color: lightblue;
+        border-radius:unset;
+        box-shadow:unset;
+    }
+
+    .Project input[type="text"],
+    input[type="textarea"] :focus {
+        outline-color: aqua;
+    }
+    .Project input[type="textarea"] {
+        background-color: white;
+        min-height: 100px;
+        outline-color: aqua;
+    }
+
+.Project button[type="submit"] {
+    background-color:aqua;
+}
+
+    .Project button[type="submit"]:hover {
+        background-color: aquamarine;
+    }
+
+/*Style for Task form */
+.TaskF {
+    background-color: aquamarine;
+}
+    .TaskF form {
+        width: 100%;
+        background-color:aquamarine;
+        border-radius: unset;
+        box-shadow: unset;
+    }
+
+    .TaskF input[type="text"],
+    input[type="textarea"],
+    input[type="datetime-local"],
+    select:focus {
+        outline-color: chartreuse;
+       
+    }
+    .TaskF input[type="text"],
+    input[type="textarea"],
+    input[type="datetime-local"],
+    select {
+        background-color: white;
+       
+    }
+    .TaskF input[type="textarea"] {
+        height: fit-content;
+        min-height: 100px;
+    }

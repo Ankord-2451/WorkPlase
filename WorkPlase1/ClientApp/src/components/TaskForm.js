@@ -9,19 +9,18 @@ export class Task extends Component {
             Description: "",
             deadline:Date,
             IDofWorker: Number,
-            IDofProject: Number
+            IDofProject: Number,
+            Comment:""
         };
 
         this.Redirect = false;
 
-        this.data = [];
+        this.workers = [];
+        this.selectedItem = '';
+        this.fetchData();
 
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
-    }
-
-    componentDidMount() {
-       this.Workers();
     }
 
     onChange(e) {
@@ -53,27 +52,29 @@ export class Task extends Component {
             });
     };
 
-    Workers(e) {
-        fetch('Worker', {
-            method: 'GET',
-        })
-            .then(response => response.json())
-            .then(response => {
-                this.data = response;  
-                this.forceUpdate();
+    fetchData() {
+        // ¬ыполните запрос на сервер дл€ получени€ данных
+        // «десь используетс€ fetch дл€ примера, но вы можете использовать любую библиотеку AJAX или Axios дл€ запросов к серверу
+        fetch('Worker')
+            .then((response) => response.json())
+            .then((data) => {
+                this.workers = data; // —охран€ем данные в переменную класса
+                this.forceUpdate(); // ѕринудительно обновл€ем компонент дл€ отображени€ данных
             })
-            .catch(error => {
-                // ќбработка ошибок
-                console.error(error);
-            });
+            .catch((error) => console.error(error));
     }
+
+    handleSelectChange = (e) => {
+        this.selectedItem = e.target.value;
+        this.setState({ IDofWorker: e.target.value });
+    };
 
     render() {
         if (this.Redirect) {
             return <Navigate to="/" replace={true} />;
         }
       return  (
-            <div align="center">
+          <div class="TaskF" align="center">
               <div class="text-center">
                   <form onSubmit={this.onSubmit} style={this.WForm}>
 
@@ -84,7 +85,7 @@ export class Task extends Component {
                          <br />
 
                       <label name="Description">Description :</label>
-                      <input type="text" name="Description"
+                      <input type="textarea" name="Description"
                           value={this.state.Description}
                              onChange={this.onChange} />
                       <br />  
@@ -97,14 +98,20 @@ export class Task extends Component {
 
                       <label name="IDofWorker">IDofWorker :  </label>
                       <select name="IDofWorker"
-                          value={this.state.IDofWorker}
-                         onChange={this.onChange}>
-                         {this.data.map(item=>
-                           <option value={item.Id}>{item.Name}</option>
+                          value={this.selectedItem}
+                          onChange={this.handleSelectChange}>
+                          <option value="">Chose Worker</option>
+                          {this.workers.map(item =>
+                              <option key={item.id} value={item.id}>{item.name}</option>
                          )}
                       </select>
                       <br />
-
+                      <label name="Comment">Comment :</label>
+                      <input type="textarea" name="Comment"
+                          value={this.state.Comment}
+                          onChange={this.onChange}
+                         plaseholder="this plase can be empty" />
+                      <br />  
                       
                 
                 <button type="submit">Create Task</button>
