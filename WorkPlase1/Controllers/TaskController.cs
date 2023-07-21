@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using WorkPlase1.Core;
 using WorkPlase1.Data;
 using WorkPlase1.Models;
 
@@ -48,6 +49,9 @@ namespace WorkPlase1.Controllers
         {
             if (ModelState.IsValid)
             {
+                var session = new SessionWorker(HttpContext);
+                if (session.IsEmployer())
+                {            
                 try { 
                 dbContext.Tasks.Remove(dbContext.Tasks.First(x=>x.Id==task.Id));
                 }
@@ -56,7 +60,9 @@ namespace WorkPlase1.Controllers
                 }
                 dbContext.Tasks.Add(task);
                 dbContext.SaveChanges();
-                return Ok(JsonSerializer.Serialize<string>("Task was update"));
+                return Ok(JsonSerializer.Serialize<string>("Task was update")); 
+                }
+                return Ok(JsonSerializer.Serialize<string>("you don't have enough permission to do so"));
             }
             return Ok(JsonSerializer.Serialize<string>("Task isn't valid"));
         }
@@ -64,16 +70,21 @@ namespace WorkPlase1.Controllers
         [HttpDelete]
         public IActionResult Delete([FromBody]int Id)
         {
-            try
+            var session = new SessionWorker(HttpContext);
+            if (session.IsEmployer())
             {
-                dbContext.Tasks.Remove(dbContext.Tasks.First(x => x.Id == Id));
-                dbContext.SaveChanges();
+                try
+                {
+                    dbContext.Tasks.Remove(dbContext.Tasks.First(x => x.Id == Id));
+                    dbContext.SaveChanges();
+                }
+                catch
+                {
+                    return Ok(JsonSerializer.Serialize<string>("Task wasn't found"));
+                }
+                return Ok(JsonSerializer.Serialize<string>("Task was delete"));
             }
-            catch
-            {
-                return Ok(JsonSerializer.Serialize<string>("Task wasn't found"));
-            }
-            return Ok(JsonSerializer.Serialize<string>("Task was delete"));
+            return Ok(JsonSerializer.Serialize<string>("you don't have enough permission to do so"));
         }
     }
 }

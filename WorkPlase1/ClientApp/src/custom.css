@@ -137,10 +137,12 @@ select {
 /*Style for Task form */
 .TaskF {
     background-color: aquamarine;
+    display:block;
 }
     .TaskF form {
+        display: block;
         width: 100%;
-        background-color:aquamarine;
+        background-color: aquamarine;
         border-radius: unset;
         box-shadow: unset;
     }
@@ -150,16 +152,36 @@ select {
     input[type="datetime-local"],
     select:focus {
         outline-color: chartreuse;
-       
+        
     }
+
     .TaskF input[type="text"],
     input[type="textarea"],
     input[type="datetime-local"],
     select {
+        text-align: center;
         background-color: white;
-       
+        margin: 15px;
     }
-    .TaskF input[type="textarea"] {
-        height: fit-content;
-        min-height: 100px;
-    }
+.TaskF input[type="textarea"] {
+    margin: 15px;
+    text-align: center;
+}
+textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 20px;
+    width: 100%;
+    max-height: 300px;
+    min-height: 100%;
+    outline-color: chartreuse;
+}
+.Task {
+    display: flex;
+    
+}
+.Task-2 {
+    display: flex;
+    flex-direction: column;
+}

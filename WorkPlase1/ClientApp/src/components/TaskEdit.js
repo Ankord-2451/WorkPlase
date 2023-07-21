@@ -22,7 +22,9 @@ export class TaskEdit extends Component {
         this.workers = [];
         this.selectedItem = '';
         this.fetchData();
-
+        this.Styel = {
+            'width':'50%'
+        }
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
     }
@@ -45,7 +47,7 @@ export class TaskEdit extends Component {
             .then(response => response.json())
             .then(response => {
                 alert(response);
-                if (response === "Was created new Task") {
+                if (response === "Task was update") {
                     this.Redirect = true;
                     this.forceUpdate();
                 }
@@ -74,13 +76,14 @@ export class TaskEdit extends Component {
                     Id: data[0].id});
                 this.setState({ name: data[0].name });
                 this.setState({ Description: data[0].description });
-                this.setState({ deadline: data[0].deadline });
+                this.setState({ deadline: data[0].deadLine });
                 this.setState({ IDofWorker: data[0].iDofWorker });
                 this.setState({ DateOfStart: data[0].dateOfStart });
                 this.setState({ ProgressInPercentage: data[0].progressInPercentage });
                 this.setState({ DateOfCompletion: data[0].dateOfCompletion });
                 this.setState({ IDofProject: data[0].iDofProject });
                 this.setState({ Comment: data[0].comment });
+                this.selectedItem = data[0].iDofWorker;
  ; // Сохраняем данные в переменную класса
                 this.forceUpdate(); // Принудительно обновляем компонент для отображения данных
             })
@@ -92,34 +95,46 @@ export class TaskEdit extends Component {
         this.setState({ IDofWorker: e.target.value });
     };
 
+    view() {
+        return (
+            <div></div>
+
+        );
+    }
+
+
     render() {
         if (this.Redirect) {
             return <Navigate to="/" replace={true} />;
         }
       return  (
-          <div class="TaskF" align="center">
-              <div class="text-center">
+          <div className="TaskF">
+              <div className="text-center">
                   <form onSubmit={this.onSubmit} style={this.WForm}>
 
-                         <label name="Name">Name :</label>
                          <input type="text" name="name"
                              value={this.state.name}
-                             onChange={this.onChange} />
-                         <br />
-
-                      <label name="Description">Description :</label>
-                      <input type="textarea" name="Description"
+                          onChange={this.onChange}
+                          placeholder="name" />
+                      <br />
+                      <div className="Task">
+                          <div align="left" style={this.Styel}>
+                        <textarea name="Description"
                           value={this.state.Description}
-                             onChange={this.onChange} />
-                      <br />  
-                      
-                     <label name="deadline">deadline :  </label>
+                              onChange={this.onChange}
+                              placeholder="Description"/>
+                         <br />  
+                      </div>
+
+                          <div align="right" style={this.Styel} className="Task-2">
+                              <label align="center" name="deadline">deadline :  </label>
                       <input type="datetime-local" name="deadline"
-                          value={this.state.deadline}
-                          onChange={this.onChange} />
+                          value={ this.state.deadline}
+                              onChange={this.onChange}
+                              />
                       <br />
 
-                      <label name="IDofWorker">IDofWorker :  </label>
+                     
                       <select name="IDofWorker"
                           value={this.selectedItem}
                           onChange={this.handleSelectChange}>
@@ -129,18 +144,18 @@ export class TaskEdit extends Component {
                          )}
                       </select>
                       <br />
-                      <label name="Comment">Comment :</label>
+                     
                       <input type="textarea" name="Comment"
                           value={this.state.Comment}
                           onChange={this.onChange}
-                         plaseholder="this plase can be empty" />
+                              placeholder="Comment : this plase can be empty" />
                       <br />  
-                      
-                
-                <button type="submit">Create Task</button>
+                      </div>
+                      </div>
+                <br />
+                <button align="center" type="submit">Update Task</button>
               </form>
              <br />
-
              </div>
             </div>
         );
