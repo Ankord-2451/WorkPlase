@@ -95,14 +95,6 @@ export class TaskEdit extends Component {
         this.setState({ IDofWorker: e.target.value });
     };
 
-    view() {
-        return (
-            <div></div>
-
-        );
-    }
-
-
     render() {
         if (this.Redirect) {
             return <Navigate to="/" replace={true} />;
@@ -138,7 +130,7 @@ export class TaskEdit extends Component {
                       <select name="IDofWorker"
                           value={this.selectedItem}
                           onChange={this.handleSelectChange}>
-                          <option value="">Chose Worker</option>
+                          <option value="0">Chose Worker</option>
                           {this.workers.map(item =>
                               <option key={item.id} value={item.id}>{item.name}</option>
                          )}

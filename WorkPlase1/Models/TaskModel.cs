@@ -17,11 +17,14 @@ namespace WorkPlase1.Models
         public DateTime? DeadLine { get; set; }
 
         public int? IDofWorker { get; set; }
+        public string NameOfWorker { get; set; }
 
         public int ProgressInPercentage { get; set; }
 
         [Required]
         public int IDofProject { get; set; }
+
+        public string NameOfProject { get; set; }
 
         public DateTime? DateOfCompletion { get; set; }
 

@@ -74,46 +74,51 @@ export class Task extends Component {
             return <Navigate to="/" replace={true} />;
         }
       return  (
-          <div class="TaskF" align="center">
-              <div class="text-center">
+          <div className="TaskF">
+              <div className="text-center">
                   <form onSubmit={this.onSubmit} style={this.WForm}>
 
-                         <label name="Name">Name :</label>
-                         <input type="text" name="name"
-                             value={this.state.name}
-                             onChange={this.onChange} />
-                         <br />
-
-                      <label name="Description">Description :</label>
-                      <input type="textarea" name="Description"
-                          value={this.state.Description}
-                             onChange={this.onChange} />
-                      <br />  
-                      
-                     <label name="deadline">deadline :  </label>
-                      <input type="datetime-local" name="deadline"
-                          value={this.state.deadline}
-                          onChange={this.onChange} />
-                      <br />
-
-                      <label name="IDofWorker">IDofWorker :  </label>
-                      <select name="IDofWorker"
-                          value={this.selectedItem}
-                          onChange={this.handleSelectChange}>
-                          <option value="">Chose Worker</option>
-                          {this.workers.map(item =>
-                              <option key={item.id} value={item.id}>{item.name}</option>
-                         )}
-                      </select>
-                      <br />
-                      <label name="Comment">Comment :</label>
-                      <input type="textarea" name="Comment"
-                          value={this.state.Comment}
+                      <input type="text" name="name"
+                          value={this.state.name}
                           onChange={this.onChange}
-                         plaseholder="this plase can be empty" />
-                      <br />  
-                      
-                
+                          placeholder="name" />
+                      <br />
+                      <div className="Task">
+                          <div align="left" style={this.Styel}>
+                              <textarea name="Description"
+                                  value={this.state.Description}
+                                  onChange={this.onChange}
+                                  placeholder="Description" />
+                              <br />
+                          </div>
+
+                          <div align="right" style={this.Styel} className="Task-2">
+                              <label align="center" name="deadline">deadline :  </label>
+                              <input type="datetime-local" name="deadline"
+                                  value={this.state.deadline}
+                                  onChange={this.onChange}
+                              />
+                              <br />
+
+
+                              <select name="IDofWorker"
+                                  value={this.selectedItem}
+                                  onChange={this.handleSelectChange}>
+                                  <option value="">Chose Worker</option>
+                                  {this.workers.map(item =>
+                                      <option key={item.id} value={item.id}>{item.name}</option>
+                                  )}
+                              </select>
+                              <br />
+
+                              <input type="textarea" name="Comment"
+                                  value={this.state.Comment}
+                                  onChange={this.onChange}
+                                  placeholder="Comment : this plase can be empty" />
+                              <br />
+                          </div>
+                      </div>
+                      <br />
                 <button type="submit">Create Task</button>
               </form>
              <br />

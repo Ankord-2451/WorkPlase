@@ -51,20 +51,54 @@ namespace WorkPlase1.Controllers
             {
                 var session = new SessionWorker(HttpContext);
                 if (session.IsEmployer())
-                {            
-                try { 
+                {
+                    if(dbContext.Tasks.First(x => x.Id == task.Id).IDofWorker != task.IDofWorker)
+                    {
+                        task.DateOfStart = DateTime.Now;
+                    }
+                    if(task.IDofWorker == 0)
+                    {
+                        task.DateOfStart = null;
+                    }
+                    
+                 try { 
                 dbContext.Tasks.Remove(dbContext.Tasks.First(x=>x.Id==task.Id));
                 }
                 catch {
                     return Ok(JsonSerializer.Serialize<string>("Task wasn't found"));
                 }
-                dbContext.Tasks.Add(task);
-                dbContext.SaveChanges();
-                return Ok(JsonSerializer.Serialize<string>("Task was update")); 
+                  
+                 dbContext.Tasks.Add(task);
+                 dbContext.SaveChanges();
+                 return Ok(JsonSerializer.Serialize<string>("Task was update")); 
                 }
                 return Ok(JsonSerializer.Serialize<string>("you don't have enough permission to do so"));
             }
             return Ok(JsonSerializer.Serialize<string>("Task isn't valid"));
+        }
+
+        [HttpPut("Percent/{id}")]
+        public IActionResult PutProcent(int id,[FromBody] int Percent)
+        {
+                var session = new SessionWorker(HttpContext);
+                    var task = new TaskModel();
+                    try
+                    {
+                        task = dbContext.Tasks.First(x => x.Id == id);
+                        task.ProgressInPercentage = Percent;
+                        if (Percent == 100)
+                        {
+                            task.DateOfCompletion = DateTime.Now;
+                        }
+                    }
+                    catch
+                    {
+                        return Ok(JsonSerializer.Serialize<string>("Task wasn't found"));
+                    }
+
+                    dbContext.Tasks.Update(task);
+                    dbContext.SaveChanges();
+                    return Ok(JsonSerializer.Serialize<string>("Task was update"));
         }
 
         [HttpDelete]

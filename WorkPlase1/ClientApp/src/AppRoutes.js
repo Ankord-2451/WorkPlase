@@ -5,7 +5,8 @@ import { Auth } from "./components/Authorization";
 import { Regist } from "./components/Registration"; 
 //import { Task } from "./components/TaskForm";
 //import { Pr } from "./components/PrForm";
-import { TaskEdit } from "./components/TaskEdit";
+//import { TaskEdit } from "./components/TaskEdit";
+import { TaskShow } from "./components/TaskShow";
 
 const AppRoutes = [
   {
@@ -29,8 +30,8 @@ const AppRoutes = [
       element: <Regist />
     },
     {
-        path: '/TEdit',
-        element: <TaskEdit />
+        path: '/TShow',
+        element: <TaskShow id='9' />
     },
 ];
 
