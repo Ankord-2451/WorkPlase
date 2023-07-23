@@ -9,7 +9,7 @@ export class TaskShow extends Component {
             Name: "",
             Description: "",
             Deadline: Date,
-            NameofWorker: "",
+            NameOfWorker: "",
             DateOfStart: Date,
             ProgressInPercentage: Number,
             DateOfCompletion: Date,
@@ -20,7 +20,8 @@ export class TaskShow extends Component {
         this.report = {
             Id: Number,
             Description: "",
-            IdOfTask:Number
+            IdOfTask: Number,
+            Date:Date
         };
 
         this.reports = [];
@@ -31,8 +32,25 @@ export class TaskShow extends Component {
     }
 
     onChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
+        if ((e.target.value <= 100 && e.target.value >= 0)) {
+            this.setState({ [e.target.name]: e.target.value });
+        }
+        if (e.target.value > 100) {
+            this.setState({ [e.target.name]: 100 });
+        }
+        if (e.target.value < 0 || e.target.value==='' )
+        {
+            this.setState({ [e.target.name]: 0 });
+        }
+       
+
     }
+
+    ReportChange = (e) => {
+        this.report.Description = e.target.value;
+        this.forceUpdate();
+    }
+
     SubmitPrercents = (e) => {
         e.preventDefault();
 
@@ -106,41 +124,77 @@ export class TaskShow extends Component {
         );
     }
 
+    SubReport = (e) => {
+        e.preventDefault();
+
+        this.report.IdOfTask = this.state.Id;
+        
+        fetch('/Reports', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.report)
+        })
+            .then(response => response.json())
+            .then(response => {
+                alert(response);
+                this.report.Description = "";
+                this.ReportsUpload();
+                this.forceUpdate();
+            })
+            .catch(error => {
+                // Обработка ошибок
+                console.error(error);
+            });
+    }
+
     render() {
         if (this.Redirect) {
             return <Navigate to="/" replace={true} />;
         }
       return  (
-          <div  align="center">
-              <div class="text-center">
+          <div >
+              <div >
                   <span>Date Of Start: {this.state.DateOfStart} - Date Of Completion: {this.state.DateOfCompletion}   deadline: {this.state.Deadline}</span>
                   <br />
-                  <div>
-                      <h1>{this.state.Name}</h1> <span>{this.state.ProgressInPercentage}</span> <hr width={this.state.ProgressInPercentage + '%'} />
-                  </div>
+                  <h1>{this.state.Name}</h1>
+                 
+                  <div >
+                          <hr className="Percent" size="25" width={this.state.ProgressInPercentage + '%'} />
+                  </div> 
+                      
+                      
+                      <form width="20%" onSubmit={this.SubmitPrercents} >
+                      <label>Set Progress : </label>
+                          <input width="50px" min={0} max={100}
+                          value={this.state.ProgressInPercentage}
+                          type="number"
+                          name="ProgressInPercentage"
+                          onChange={this.onChange} />
+                              <button height="20px" type="submit">Set</button>
+                          
+                      </form>
+                    
+               
                   <br />
-                  <label>Name of project : </label><span>{this.state.NameOfProject}</span>
+                  <label align="left">Name of project :</label><span>{this.state.NameOfProject}</span>
                   <br />
-                  <label>Name of worker : </label><span>{this.state.NameofWorker} {this.Now}</span>
+                  <label align="left">Name of worker : </label><span>{this.state.NameOfWorker}</span>
                   <br />
-                  <label>Description : </label>
+                  <label align="left">Description : </label>
                   <br />
                   <div>{this.state.Description}</div>                    
                   <br />     
                   {this.CommentChek}
-                  <form onSubmit={this.SubmitPrercents}>
-                      <input min={0} max={100}
-                          type="number"
-                          name="ProgressInPercentage"
-                          onChange={this.onChange} />
-                      <button type="submit">Set</button>
-                  </form>
+                  
                   <br />
-                  <label>reports :</label>
+                  <h4 align="center">reports :</h4>
                   <br />
+                  <div className="ReportsContainer">
                   {this.reports.map(item =>
                       <div>
-                      <div className="ReportsContainer" align="center">
+                      <div className="ReportContainer" align="center">
                           <hr className="dividingLine"/>
                           <div className="Report" align="center">
                               {item.date} : {item.description}
@@ -148,12 +202,13 @@ export class TaskShow extends Component {
                           </div>
                           <br/>
                       </div>
-                  )}
-                  <div className="ReportsContainer" align="center">
+                      )}
+                  </div>
+                  <div className="ReportContainer" align="center">
                           <hr className="dividingLine"/>
                           <div className="Report" align="center">
                           <form className="ReportF" onSubmit={this.SubReport}>
-                              <textarea name="Description" />
+                              <textarea name="Description" value={this.report.Description} onChange={this.ReportChange} />
                               <button type="submit">post</button>
                           </form>
                           </div>
