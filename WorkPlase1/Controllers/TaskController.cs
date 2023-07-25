@@ -23,9 +23,15 @@ namespace WorkPlase1.Controllers
         }
 
         [HttpGet("One/{id?}")]
-        public IEnumerable<TaskModel> GetOne(int id)
+        public TaskModel GetOne(int id)
         {
-            return dbContext.Tasks.Where(x => x.Id == id).ToArray();
+            var Task = dbContext.Tasks.First(x => x.Id == id);
+           
+            Task.deadLineChek = Task.DeadLine<DateTime.Now;
+            dbContext.Tasks.Update(Task);
+            dbContext.SaveChanges();
+
+            return Task;
         }
 
         [HttpPost]

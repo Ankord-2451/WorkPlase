@@ -217,6 +217,8 @@ textarea {
     background-color: #f0f0f0;
 }
 .Percent {
+    padding:0px;
+    margin:0px;
     color: forestgreen;
     transition: width 0.8s ease-in-out;
 }
@@ -241,4 +243,7 @@ textarea {
 .ReportsContainer {
     max-height:350px;
     overflow-y:auto;
+}
+.scale {
+    border: 5px solid forestgreen;
 }

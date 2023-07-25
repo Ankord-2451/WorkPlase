@@ -31,5 +31,7 @@ namespace WorkPlase1.Models
         public DateTime? DateOfStart { get; set; }
 
         public string? Comment { get; set; }
+
+        public bool deadLineChek { get; set; }
     }
 }

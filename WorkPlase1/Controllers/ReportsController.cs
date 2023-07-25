@@ -22,6 +22,10 @@ namespace WorkPlase1.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] ReportModel report) 
         {
+            for (int i = 60; i < report.Description.Length; i += 60)
+            { 
+            report.Description = report.Description.Insert(i, "\n");
+            }
            report.Date = DateTime.Now;
            dbContext.Reports.Add(report);
            dbContext.SaveChanges();

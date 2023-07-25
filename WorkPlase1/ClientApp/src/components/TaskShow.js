@@ -14,21 +14,28 @@ export class TaskShow extends Component {
             ProgressInPercentage: Number,
             DateOfCompletion: Date,
             NameOfProject: "",
-            Comment: ""
+            Comment: "",
+            deadLineChek: true | false
         };
 
         this.report = {
             Id: Number,
             Description: "",
             IdOfTask: Number,
-            Date:Date
+            Date: Date
         };
 
         this.reports = [];
 
+        this.Green = { 'color': 'green' };
+        this.Red = { 'color': 'red' };
+
+        this.Completed = {};
+
         this.Redirect = false;
-        this.fetchData();     
+        this.fetchData();
         this.ReportsUpload();
+
     }
 
     onChange = (e) => {
@@ -82,7 +89,7 @@ export class TaskShow extends Component {
                 this.forceUpdate();// Принудительно обновляем компонент для отображения данных
             })
             .catch((error) => console.error(error));
-        
+
     }
 
     fetchData() {      
@@ -90,28 +97,28 @@ export class TaskShow extends Component {
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
-                this.setState({
-                    Id: data[0].id
-                });
-                this.setState({ Name: data[0].name });
-                this.setState({ Description: data[0].description });
-                this.setState({ Deadline: data[0].deadLine });
-                this.setState({ NameOfWorker: data[0].nameOfWorker });
-                this.setState({ DateOfStart: data[0].dateOfStart });
-                this.setState({ ProgressInPercentage: data[0].progressInPercentage });
-                this.setState({ DateOfCompletion: data[0].dateOfCompletion });
-                this.setState({ NameOfProject: data[0].nameOfProject });
-                this.setState({ Comment: data[0].comment });
-                this.selectedItem = data[0].iDofWorker;
+                this.setState({Id: data.id });                               
+                this.setState({ Name: data.name });
+                this.setState({ Description: data.description });
+                this.setState({ Deadline: data.deadLine });
+                this.setState({ NameOfWorker: data.nameOfWorker });
+                this.setState({ DateOfStart: data.dateOfStart });
+                this.setState({ ProgressInPercentage: data.progressInPercentage });
+                this.setState({ DateOfCompletion: data.dateOfCompletion });
+                this.setState({ NameOfProject: data.nameOfProject });
+                this.setState({ Comment: data.comment });
+                this.setState({ deadLineChek: data.deadLineChek });
+                this.selectedItem = data.iDofWorker;
+               
                 ; // Сохраняем данные в переменную класса
                 this.forceUpdate(); // Принудительно обновляем компонент для отображения данных
             })
-            .catch((error) => console.error(error));   
-
+            .catch((error) => console.error(error));
+       
     }
 
     CommentChek() {
-        if (this.state.Comment === null) {
+        if (this.state.Comment === '') {
             return (<br />);
         }
         return (
@@ -149,6 +156,39 @@ export class TaskShow extends Component {
             });
     }
 
+    DeadLineChek() {
+        if (this.state.DateOfCompletion !== null) {
+            
+            return (<div style={this.Green}>(Completed)</div>);
+        }
+        else { 
+            if (this.state.deadLineChek) {   
+               
+                return (<div style={this.Red}>(Overdue)</div>);    
+           }
+            else {      
+               
+               return (<div style={this.Green}>(Fit)</div>);
+           }
+        }
+    }
+
+    CompletedChek() {
+        if (this.state.DateOfCompletion !== null) {
+            this.Completed = {
+                margin: '0px',
+                padding:'0px',
+                overflow: 'hidden',
+                height: '0px'
+            };
+        }
+        else {
+            this.Completed = {
+             
+            };
+        }
+    }
+
     render() {
         if (this.Redirect) {
             return <Navigate to="/" replace={true} />;
@@ -157,15 +197,15 @@ export class TaskShow extends Component {
           <div >
               <div >
                   <span>Date Of Start: {this.state.DateOfStart} - Date Of Completion: {this.state.DateOfCompletion}   deadline: {this.state.Deadline}</span>
-                  <br />
-                  <h1>{this.state.Name}</h1>
+                  <br />{this.CompletedChek()}
+                  <h1 style={this.IsAlive}>{this.state.Name} {this.DeadLineChek()}</h1>
                  
-                  <div >
+                  <div className="scale">
                           <hr className="Percent" size="25" width={this.state.ProgressInPercentage + '%'} />
                   </div> 
-                      
-                      
-                      <form width="20%" onSubmit={this.SubmitPrercents} >
+
+
+                  <form style={this.Completed} width="20%" onSubmit={this.SubmitPrercents} >
                       <label>Set Progress : </label>
                           <input width="50px" min={0} max={100}
                           value={this.state.ProgressInPercentage}
@@ -186,7 +226,7 @@ export class TaskShow extends Component {
                   <br />
                   <div>{this.state.Description}</div>                    
                   <br />     
-                  {this.CommentChek}
+                  {this.CommentChek()}
                   
                   <br />
                   <h4 align="center">reports :</h4>
@@ -204,10 +244,10 @@ export class TaskShow extends Component {
                       </div>
                       )}
                   </div>
-                  <div className="ReportContainer" align="center">
+                  <div style={this.Completed} className="ReportContainer" align="center">
                           <hr className="dividingLine"/>
                           <div className="Report" align="center">
-                          <form className="ReportF" onSubmit={this.SubReport}>
+                          <form  className="ReportF" onSubmit={this.SubReport}>
                               <textarea name="Description" value={this.report.Description} onChange={this.ReportChange} />
                               <button type="submit">post</button>
                           </form>
