@@ -1,4 +1,5 @@
-/* Provide sufficient contrast against white background */
+
+
 a {
   color: #0366d6;
 }
@@ -246,4 +247,11 @@ textarea {
 }
 .scale {
     border: 5px solid forestgreen;
+}
+.WorkerContainer {
+    box-shadow:unset;
+    width: 20%;
+    height: 980px;
+    background-color: #f0f0f0;
+    border: 3px solid gray;
 }

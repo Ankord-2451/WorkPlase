@@ -35,5 +35,19 @@ namespace WorkPlase1.Controllers
                 return dbContext.Accounts.Where(x => x.Id == session.GetUserId()).ToArray();
             }
         }
+
+        [HttpGet("Project/{id}")]
+        public IEnumerable<AccountModel> WorkersOfProject(int id)
+        {
+            var workers = new List<AccountModel>();
+            var Tasks=dbContext.Tasks.Where(x => x.IDofProject == id).ToList();
+            foreach (var task in Tasks)
+            {
+                if(task.IDofWorker != null) { 
+                   workers.Add(dbContext.Accounts.First(x => x.Id == task.IDofWorker));
+                }
+            }
+            return workers;
+        }
     }
 }

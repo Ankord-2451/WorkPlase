@@ -68,8 +68,8 @@ export class TaskEdit extends Component {
                 this.forceUpdate(); // Принудительно обновляем компонент для отображения данных
             })
             .catch((error) => console.error(error));
-
-        fetch('Task/One/9')
+        const url = 'Task/One/' + this.props.id;
+        fetch(url)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
