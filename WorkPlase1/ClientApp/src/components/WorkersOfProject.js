@@ -17,6 +17,9 @@ export class WorkersOfProject extends Component {
         }
     }
 
+    Worker = (e) => {
+        this.props.Change(e.target.id);
+    }
   
     fetchDataPart() {
         const url = 'Worker/Project' + this.props.IdOfProject;
@@ -50,7 +53,7 @@ export class WorkersOfProject extends Component {
                   <div className="ReportContainer" align="center">
                       <hr className="dividingLine" />
                       <div className="Report" align="center">
-                          {item.name}
+                          <button className="menubtn" id={item.id} onClick={this.Worker}>{item.name}</button>
                       </div>
                      
                   </div>)            

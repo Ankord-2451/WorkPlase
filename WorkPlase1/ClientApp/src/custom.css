@@ -251,7 +251,11 @@ textarea {
 .WorkerContainer {
     box-shadow:unset;
     width: 20%;
-    height: 980px;
     background-color: #f0f0f0;
     border: 3px solid gray;
+    min-height:900px;
+}
+.menubtn{
+    all:unset;
+    color:gray;
 }
