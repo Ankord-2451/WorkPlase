@@ -5,13 +5,14 @@ export class ProjectShow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           id:null
+            id: null,
+            component: null
         };
-
-       
+      
     }
 
-    onIDChange = (ID) =>{
+    onComponentChange = (Component,ID) => {
+        this.setState({ component: Component });
         this.setState({ id: ID });
     }
 
@@ -19,8 +20,9 @@ export class ProjectShow extends Component {
     render() {
         return (
             <div>
-                <WorkersOfProject useplase="main" Change={this.onIDChange} />
+                <WorkersOfProject useplase="main" Change={this.onComponentChange} />
                 {this.state.id}
+                {this.state.component}
             </div>
         );
     }

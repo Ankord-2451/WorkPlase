@@ -49,5 +49,31 @@ namespace WorkPlase1.Controllers
             }
             return workers;
         }
+
+        [HttpGet("byID/{id}")]
+        public AccountModel WorkerByID(int id)
+        {
+            return dbContext.Accounts.First(x => x.Id == id);
+        }
+        [HttpPost("Prise/{id}")]
+        public IActionResult PrisePerHoure(int id, [FromBody]int Prise)
+        {
+            var worker  = new AccountModel();
+            try
+            {
+                worker = dbContext.Accounts.First(x => x.Id == id);
+                worker.PrisePerHour = Prise;
+            }
+            catch
+            {
+                return Ok(JsonSerializer.Serialize<string>("Account wasn't found"));
+            }
+
+            dbContext.Accounts.Update(worker);
+            dbContext.SaveChanges();
+            return Ok(JsonSerializer.Serialize<string>("Prise per houre was update"));
+        }
+
+
     }
 }

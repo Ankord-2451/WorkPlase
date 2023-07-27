@@ -34,6 +34,21 @@ namespace WorkPlase1.Controllers
             return Task;
         }
 
+        [HttpGet("worker/{id?}")]
+        public IEnumerable<TaskModel> GetWT(int id)
+        {
+            var Task = dbContext.Tasks.Where(x => x.IDofWorker == id);
+
+            foreach (var task in Task) {
+            task.deadLineChek = task.DeadLine < DateTime.Now;
+            dbContext.Tasks.Update(task);
+            }
+           
+            dbContext.SaveChanges();
+
+            return Task.ToArray();
+        }
+
         [HttpPost]
         public IActionResult Post([FromBody]TaskModel task)
         {
@@ -86,7 +101,7 @@ namespace WorkPlase1.Controllers
         [HttpPut("Percent/{id}")]
         public IActionResult PutProcent(int id,[FromBody] int Percent)
         {
-                var session = new SessionWorker(HttpContext);
+               
                     var task = new TaskModel();
                     try
                     {

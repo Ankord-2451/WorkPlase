@@ -1,30 +1,29 @@
 import React, { Component} from 'react';
-import { Navigate } from 'react-router-dom';
-export class worker extends Component {
- static displayName = worker.name;
+export class Worker extends Component {
+ static displayName = Worker.name;
     constructor(props) {
         super(props);
         this.state = {
             Id:Number,
-            name: "",
-            Description: "",
-            deadline:Date,
-            IDofWorker: Number,
-            DateOfStart: Date,
-            ProgressInPercentage: Number,
-            DateOfCompletion:Date,
-            IDofProject: Number,
-            Comment:""
+            Name: "",
+            PrisePerHour: Number,
+            HoursOfWork: Number,
+            Profession: ""
         };
 
         this.Redirect = false;
 
-        this.workers = [];
-        this.selectedItem = '';
-        this.fetchData();
-        this.Styel = {
-            'width':'50%'
+        this.Tasks = [];
+
+        this.form = {
+             all: 'unset',
+             display: 'flex',
+            'align-items': 'center',
+             gap: '2px' 
         }
+       
+        this.fetchData();
+       
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
     }
@@ -36,18 +35,18 @@ export class worker extends Component {
     onSubmit = (e) => {
         e.preventDefault();
 
-        // ќтправка данных формы на сервер
-        fetch('Task', {
-            method: 'PUT',
+        const url = 'Worker/Prise/' + this.props.id;
+        fetch(url, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(this.state)
+            body: JSON.stringify(this.state.PrisePerHour)
         })
             .then(response => response.json())
             .then(response => {
                 alert(response);
-                if (response === "Task was update") {
+                if (response === "Prise per houre was update") {
                     this.Redirect = true;
                     this.forceUpdate();
                 }
@@ -61,94 +60,78 @@ export class worker extends Component {
     fetchData() {
         // ¬ыполните запрос на сервер дл€ получени€ данных
         // «десь используетс€ fetch дл€ примера, но вы можете использовать любую библиотеку AJAX или Axios дл€ запросов к серверу
-        fetch('Worker')
-            .then((response) => response.json())
-            .then((data) => {
-                this.workers = data; // —охран€ем данные в переменную класса
-                this.forceUpdate(); // ѕринудительно обновл€ем компонент дл€ отображени€ данных
-            })
-            .catch((error) => console.error(error));
-        const url = 'Task/One/' + this.props.id;
+        const url = 'Worker/byID/' + this.props.id;
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
-                this.setState({
-                    Id: data[0].id});
-                this.setState({ name: data[0].name });
-                this.setState({ Description: data[0].description });
-                this.setState({ deadline: data[0].deadLine });
-                this.setState({ IDofWorker: data[0].iDofWorker });
-                this.setState({ DateOfStart: data[0].dateOfStart });
-                this.setState({ ProgressInPercentage: data[0].progressInPercentage });
-                this.setState({ DateOfCompletion: data[0].dateOfCompletion });
-                this.setState({ IDofProject: data[0].iDofProject });
-                this.setState({ Comment: data[0].comment });
-                this.selectedItem = data[0].iDofWorker;
- ; // —охран€ем данные в переменную класса
-                this.forceUpdate(); // ѕринудительно обновл€ем компонент дл€ отображени€ данных
+                this.setState({ Id: data.id});
+                   
+                this.setState({ Name: data.name });
+                this.setState({ PrisePerHour: data.prisePerHour });
+                this.setState({ HoursOfWork: data.hoursOfWork });
+                this.setState({ Profession: data.profession });
+
+            })
+            .catch((error) => console.error(error));
+        const url2 = 'Task/worker/' + this.props.id;
+
+        fetch(url2)
+            .then((response) => response.json())
+            .then((data) => {
+                this.Tasks = data;
+                this.forceUpdate();
             })
             .catch((error) => console.error(error));
     }
 
-    handleSelectChange = (e) => {
-        this.selectedItem = e.target.value;
-        this.setState({ IDofWorker: e.target.value });
-    };
+    Task = (e) => {
+        this.props.Change("TaskShow",e.target.id);
+    }
 
     render() {
-        if (this.Redirect) {
-            return <Navigate to="/" replace={true} />;
-        }
       return  (
-          <div className="TaskF">
-              <div className="text-center">
-                  <form onSubmit={this.onSubmit} style={this.WForm}>
-
-                         <input type="text" name="name"
-                             value={this.state.name}
-                          onChange={this.onChange}
-                          placeholder="name" />
-                      <br />
-                      <div className="Task">
-                          <div align="left" style={this.Styel}>
-                        <textarea name="Description"
-                          value={this.state.Description}
-                              onChange={this.onChange}
-                              placeholder="Description"/>
-                         <br />  
-                      </div>
-
-                          <div align="right" style={this.Styel} className="Task-2">
-                              <label align="center" name="deadline">deadline :  </label>
-                      <input type="datetime-local" name="deadline"
-                          value={ this.state.deadline}
-                              onChange={this.onChange}
-                              />
-                      <br />
-
-                     
-                      <select name="IDofWorker"
-                          value={this.selectedItem}
-                          onChange={this.handleSelectChange}>
-                          <option value="0">Chose Worker</option>
-                          {this.workers.map(item =>
-                              <option key={item.id} value={item.id}>{item.name}</option>
-                         )}
-                      </select>
-                      <br />
-                     
-                      <input type="textarea" name="Comment"
-                          value={this.state.Comment}
-                          onChange={this.onChange}
-                              placeholder="Comment : this plase can be empty" />
-                      <br />  
-                      </div>
-                      </div>
-                <br />
-                <button align="center" type="submit">Update Task</button>
+          <div>
+             
+              <h1 align="center">{this.state.Name}</h1>
+              <br />
+              <br />
+              <div className="flex-around-worker">
+                  <h2 >
+                  <lable>Hours Of Work:</lable>
+                  {this.state.HoursOfWork}
+              </h2>
+                  <form onSubmit={this.onSubmit} style={this.form}>
+                  <h2>Prise Per Hour :</h2>
+                      <input type="number" min="1" name="PrisePerHour"
+                             value={this.state.PrisePerHour}
+                          onChange={this.onChange} />                    
+                <button type="submit">Set</button>
               </form>
-             <br />
-             </div>
+                  <h2 >
+                  <lable>Salary :</lable>
+                  {this.state.HoursOfWork*this.state.PrisePerHour}$
+                  </h2>
+              </div>
+              <br />
+              <br />
+              <h2 align="center">
+                  <lable>Profession :</lable>
+                  {this.state.Profession}
+              </h2>
+              <br />
+              <br />
+              <h2 align="center">Tasks :</h2>
+              <div align="center">             
+                      {this.Tasks.map(item =>
+                          <div className="ReportContainer" align="center">
+                              <hr className="dividingLine" />
+                              <div className="Report" align="center">
+                                  <button className="menubtn" id={item.id} onClick={this.Task}>{item.name}  {item.dateOfStart}</button>
+                              </div>
+
+                          </div>)
+                      }
+              </div>
             </div>
         );
     }

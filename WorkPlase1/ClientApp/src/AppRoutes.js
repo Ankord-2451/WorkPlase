@@ -7,8 +7,8 @@ import { Regist } from "./components/Registration";
 //import { Pr } from "./components/PrForm";
 //import { TaskEdit } from "./components/TaskEdit";
 //import { TaskShow } from "./components/TaskShow";
+//import { Worker } from "./components/worker";
 import { ProjectShow } from "./components/ProjectShow";
-import { WorkersOfProject } from "./components/WorkersOfProject";
 
 const AppRoutes = [
   {
@@ -36,8 +36,7 @@ const AppRoutes = [
         element: <ProjectShow/>
     },
     {
-        path: '/TShow',
-        element: <WorkersOfProject useplase="main" />
+        // path: '/TShow',
         //element: <TaskShow id='9' /> path: '/Regist/:id',
     },
 ];

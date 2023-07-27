@@ -18,7 +18,7 @@ export class WorkersOfProject extends Component {
     }
 
     Worker = (e) => {
-        this.props.Change(e.target.id);
+        this.props.Change("worker",e.target.id);
     }
   
     fetchDataPart() {
